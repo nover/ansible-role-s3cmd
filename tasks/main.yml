@@ -1,0 +1,13 @@
+---
+# tasks file for ansible-role-s3cmd
+- name: Add s3cmd apt key
+  apt_key: url=http://s3tools.org/repo/deb-all/stable/s3tools.key state=present
+
+- name: Add s3cmd repos 
+  apt_repository: repo='deb http://s3tools.org/repo/deb-all stable/' state=present update_cache=yes
+
+- name: Install s3cmd tool
+  apt: name=s3cmd state=present
+ 
+- name: Place s3cmd config for root user
+  template: src=s3cfg.j2 dest=/root/.s3cfg owner=root group=root mode=600
